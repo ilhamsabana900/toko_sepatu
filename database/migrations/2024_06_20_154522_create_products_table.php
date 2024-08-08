@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama_product');
             $table->decimal('harga', 8, 2);
-            $table->string('gambar')->nullable();
+            $table->string('gambar');
             $table->string('ukuran');
             $table->text('deskripsi');
             $table->timestamps();

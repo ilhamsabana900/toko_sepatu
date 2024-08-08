@@ -8,102 +8,92 @@ use App\Http\Controllers\Controller;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        $products = Product::latest()->paginate(10);
-        return view('index', compact('products'))
-            ->with('i', (request()->input('page', 1) - 1) * 10);
+
+        $products = Product::all();
+        return view('admin.products.index', compact('products'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
-        return view('products.create');
+        return view('admin.products.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         $request->validate([
             'nama_product' => 'required',
             'harga' => 'required',
+            'ukuran' => 'required',
             'deskripsi' => 'required',
+            'gambar' => 'required|image',
         ]);
 
-        Product::create($request->all());
+        // Jika gambar diunggah, proses penyimpanan file
+        if ($request->hasFile('gambar')) {
+            $imageName = time() . '.' . $request->gambar->extension();
+            $request->gambar->move(public_path('images'), $imageName);
+        }
 
-        return redirect()->route('products.index')
-            ->with('success', 'Product created successfully.');
+        // Simpan data produk ke database
+        Product::create([
+            'nama_product' => $request['nama_product'],
+            'harga' => $request['harga'],
+            'ukuran' => $request['ukuran'],
+            'deskripsi' => $request['deskripsi'],
+            'gambar' => $imageName ?? null, // Menyimpan nama file gambar jika ada
+        ]);
+
+        return redirect()->route('admin.products.index')->with('success', 'Product created successfully.');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        return view('products.show', compact('product'));
+        return view('products.show', compact('products'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        return view('products.edit', compact('product'));
+        // Ambil produk berdasarkan ID, pastikan ini adalah objek, bukan koleksi
+        $product = Product::findOrFail($id);;
+        return view('admin.products.edit', compact('product'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, Product $product)
     {
         $request->validate([
             'nama_product' => 'required',
             'harga' => 'required',
+            'ukuran' => 'required',
             'deskripsi' => 'required',
+            'gambar' => 'image',
         ]);
-
-        $product->update($request->all());
+        if ($request->hasFile('gambar')) {
+            $imageName = time() . '.' . $request->gambar->extension();
+            $request->gambar->move(public_path('images'), $imageName);
+            $product->gambar = $imageName;
+        }
+        $product->update([
+            'nama_product' => $request['nama_product'],
+            'harga' => $request['harga'],
+            'ukuran' => $request['ukuran'],
+            'deskripsi' => $request['deskripsi'],
+            'gambar' => $product->gambar,
+        ]);
 
         return redirect()->route('products.index')
             ->with('success', 'Product updated successfully');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Product $product)
     {
         $product->delete();
 
-        return redirect()->route('products.index')
-            ->with('success', 'Product deleted successfully');
+        return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully.');
     }
 }
