@@ -40,6 +40,40 @@
             background-color: black;
             background-size: 100%, 100%;
         }
+
+        /* gambar di  product */
+        .card-img-top {
+            max-height: 150px;
+            /* Menyesuaikan tinggi gambar */
+            object-fit: cover;
+        }
+
+        .card-body {
+            font-size: 0.9rem;
+            /* Ukuran teks lebih kecil */
+        }
+
+        /* pagination */
+        .pagination .page-item .page-link {
+            font-size: 1rem;
+            /* Atur ukuran font */
+            padding: 0.5rem 0.75rem;
+            /* Sesuaikan padding */
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: #007bff;
+            /* Warna background untuk halaman aktif */
+            border-color: #007bff;
+            /* Warna border untuk halaman aktif */
+            color: #fff;
+            /* Warna teks untuk halaman aktif */
+        }
+
+        .pagination .page-item.disabled .page-link {
+            color: #6c757d;
+            /* Warna untuk elemen non-aktif */
+        }
     </style>
 
 </head>
