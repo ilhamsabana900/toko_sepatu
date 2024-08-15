@@ -52,8 +52,13 @@ class ProductController extends Controller
     }
     public function show($id)
     {
-        return view('products.show', compact('products'));
+        $product = Product::findOrFail($id);
+        // Mengubah kolom size menjadi array jika disimpan dalam format string
+        $sizes = explode(',', $product->ukuran); 
+    
+        return view('products.show', compact('product', 'sizes'));
     }
+
 
     public function edit($id)
     {
