@@ -73,23 +73,22 @@
             <div class="col text-center mt-2">
                 <h2>Product</h2>
             </div>
-            <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="row row-cols-1 row-cols-md-4 g-4">
                 @foreach ($products as $product)
                     <div class="col">
                         <a href="{{ route('products.show', $product->id) }}" class="text-decoration-none text-dark">
-                            <div class="card h-100">
-                                <img src="{{ asset('images/' . $product->gambar) }}" class="card-img-top" alt="{{ $product->nama_product }}">
-                                <div class="card-body">
+                            <div class="card product-card">
+                                <img src="{{ asset('images/' . $product->gambar) }}" class="card-img-top product-image" alt="{{ $product->nama_product }}">
+                                <div class="card-body product-body">
                                     <h5 class="card-title">{{ $product->nama_product }}</h5>
-                                    <p class="card-text">{{ $product->deskripsi }}</p>
+                                    <p class="card-text">Rp. {{ $product->harga }}</p>
                                 </div>
                             </div>
                         </a>
                     </div>
                 @endforeach
             </div>
-            {!! $products->withQueryString()->links('pagination::bootstrap-5')!!}
-            
+            {!! $products->withQueryString()->links('pagination::bootstrap-5') !!}
 
         </div>
     </div>

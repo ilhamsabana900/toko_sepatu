@@ -74,6 +74,47 @@
             color: #6c757d;
             /* Warna untuk elemen non-aktif */
         }
+
+        /* untuk produk */
+        .product-image {
+            width: 100%;
+            /* Mengatur lebar gambar sesuai dengan kontainer */
+            height: auto;
+            /* Mempertahankan rasio aspek */
+            aspect-ratio: 1 / 1;
+            /* Membuat gambar berbentuk persegi */
+            object-fit: cover;
+            /* Memotong gambar agar sesuai dalam kotak persegi */
+            border-radius: 10px;
+            /* Melengkungkan sudut gambar */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            /* Menambahkan bayangan */
+        }
+
+        /* untuk gambar dalam produk */
+        .product-card {
+            height: 100%;
+            /* Pastikan kartu memiliki tinggi 100% */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-image {
+            width: 100%;
+            /* Lebar gambar mengikuti lebar kontainer */
+            height: 250px;
+            /* Mengatur tinggi gambar agar seragam */
+            object-fit: cover;
+            /* Gambar akan dipotong agar sesuai dengan kotak tanpa distorsi */
+            border-radius: 10px;
+            /* Sudut melengkung */
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            /* Bayangan lembut */
+        }
+
+        .product-body {
+            flex-grow: 1;
+        }
     </style>
 
 </head>
@@ -142,6 +183,61 @@
             </div>
         </nav>
         @yield('content')
+        <footer class="bg-dark text-light p-4 mt-5">
+            <div class="container">
+                <div class="row">
+                    <!-- Informasi Kontak -->
+                    <div class="col-md-3">
+                        <h5>Contact Us</h5>
+                        <p><i class="fas fa-map-marker-alt"></i> Pasuruan, Jawa Timur</p>
+                        <p><i class="fas fa-phone-alt"></i> (123) 456-7890</p>
+                        <p><i class="fas fa-envelope"></i> speedsport@gmail.com</p>
+                    </div>
+        
+                    <!-- Navigasi Tambahan -->
+                    <div class="col-md-3">
+                        <h5>Quick Links</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="#" class="text-light">About Us</a></li>
+                            <li><a href="#" class="text-light">FAQ</a></li>
+                            <li><a href="#" class="text-light">Returns & Refunds</a></li>
+                            <li><a href="#" class="text-light">Informasi Pengiriman</a></li>
+                            <li><a href="#" class="text-light">Kontak kami</a></li>
+                        </ul>
+                    </div>
+        
+                    <!-- Media Sosial -->
+                    <div class="col-md-3">
+                        <h5>Follow Us</h5>
+                        <div>
+                            <a href="#" class="text-light me-2"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="text-light me-2"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="text-light me-2"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="text-light"><i class="fab fa-linkedin"></i></a>
+                        </div>
+                        <h5 class="mt-3">Subscribe to our Newsletter</h5>
+                        <form class="d-flex">
+                            <input type="email" class="form-control me-2" placeholder="Enter your email">
+                            <button class="btn btn-primary" type="submit">Subscribe</button>
+                        </form>
+                    </div>
+        
+                    <!-- Hak Cipta -->
+                    <div class="col-md-3">
+                        <h5>Perusahaan Kami</h5>
+                        <p>Kunjungi alamat toko kami dan hubungi untuk informasi lebih lanjut</p>
+                        <p>© 2024 Speedstreet</p>
+                    </div>
+                </div>
+                <hr class="bg-light">
+                <div class="row">
+                    <div class="col text-center">
+                        <p class="mb-0">Powered by <a href="#" class="text-light">Speedstreet</a></p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        
     </div>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
