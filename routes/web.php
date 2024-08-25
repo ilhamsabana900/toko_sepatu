@@ -28,8 +28,9 @@ Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name
 Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
 Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 
-Route::prefix('/products')->name('admin.')->group(function () {
-    Route::resource('products', ProductController::class);
-});
+
 Route::get('/admin/products', [ProductController::class, 'index'])->name('admin.products.index');
 
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('products', ProductController::class);
+});

@@ -28,7 +28,7 @@ class ProductController extends Controller
         $request->validate([
             'nama_product' => 'required',
             'harga' => 'required',
-            'ukuran' => 'required',
+            'ukuran' => 'required|array',
             'deskripsi' => 'required',
             'gambar' => 'required|image',
         ]);
@@ -39,11 +39,14 @@ class ProductController extends Controller
             $request->gambar->move(public_path('images'), $imageName);
         }
 
+        // Convert ukuran array to a comma-separated string
+        $ukuranString = implode(',', $request->ukuran);
+
         // Simpan data produk ke database
         Product::create([
             'nama_product' => $request['nama_product'],
             'harga' => $request['harga'],
-            'ukuran' => $request['ukuran'],
+            'ukuran' => $ukuranString,
             'deskripsi' => $request['deskripsi'],
             'gambar' => $imageName ?? null, // Menyimpan nama file gambar jika ada
         ]);
@@ -54,8 +57,8 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         // Mengubah kolom size menjadi array jika disimpan dalam format string
-        $sizes = explode(',', $product->ukuran); 
-    
+        $sizes = explode(',', $product->ukuran);
+
         return view('products.show', compact('product', 'sizes'));
     }
 
