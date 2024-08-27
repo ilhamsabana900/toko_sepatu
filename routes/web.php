@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Auth\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +35,10 @@ Route::get('/admin/products', [ProductController::class, 'index'])->name('admin.
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::resource('products', ProductController::class);
 });
+
+// register
+// Rute untuk menampilkan formulir registrasi
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+
+// Rute untuk memproses data registrasi
+Route::post('/register', [RegisterController::class, 'register']);

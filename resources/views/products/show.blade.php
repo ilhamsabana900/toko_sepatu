@@ -4,9 +4,10 @@
     <div class="container mt-4">
         <div class="row">
             <!-- Menampilkan Detail Produk -->
-            <div class="col-md-6">
+            <div class="col-md-6 d-flex justify-content-center">
                 <img src="{{ asset('images/' . $product->gambar) }}" class="img-fluid" alt="{{ $product->nama_product }}">
             </div>
+            
             <div class="col-md-6">
                 <h1>{{ $product->nama_product }}</h1>
                 <p class="lead">{{ $product->deskripsi }}</p>

@@ -69,6 +69,8 @@
                 </div>
             </div>
         </div>
+
+        <!-- Daftar Produk Reguler dengan Pagination -->
         <div class="row mt-1">
             <div class="col text-center mt-2">
                 <h2>Product</h2>
@@ -78,7 +80,8 @@
                     <div class="col">
                         <a href="{{ route('products.show', $product->id) }}" class="text-decoration-none text-dark">
                             <div class="card product-card">
-                                <img src="{{ asset('images/' . $product->gambar) }}" class="card-img-top product-image" alt="{{ $product->nama_product }}">
+                                <img src="{{ asset('images/' . $product->gambar) }}" class="card-img-top product-image"
+                                    alt="{{ $product->nama_product }}">
                                 <div class="card-body product-body">
                                     <h5 class="card-title">{{ $product->nama_product }}</h5>
                                     <p class="card-text">Rp. {{ $product->harga }}</p>

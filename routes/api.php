@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\LocationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,7 @@ use App\Http\Controllers\ProductController;
 */
 
 Route::apiResource('products', ProductController::class);
+Route::get('/provinces', [LocationController::class, 'getProvinces']);
+Route::get('/cities/{provinceId}', [LocationController::class, 'getCities']);
+Route::get('/districts/{regencyId}', [LocationController::class, 'getDistricts']);
+Route::get('/villages/{districtId}', [LocationController::class, 'getVillages']);
