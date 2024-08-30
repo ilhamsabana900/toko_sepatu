@@ -27,9 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(`/api/cities/${provinceId}`)
             .then(response => response.json())
             .then(data => {
-                console.log(kotaSelect);
                 kotaSelect.innerHTML = '<option value="">Pilih Kota/Kabupaten</option>';
-                console.log(kotaSelect.innerHTML);
                 data.forEach(kota => {
                     console.log(`Menambah kota:${kota.name}`);
                     

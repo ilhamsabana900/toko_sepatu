@@ -36,9 +36,8 @@ class RegisterController extends Controller
         ]);
 
         event(new Registered($user));
-        Auth::login($user);
 
-        return redirect()->route('home')->with('success', 'Pendaftaran berhasil!');
+        return redirect()->route('login')->with('success', 'Pendaftaran berhasil!');
     }
 
     protected function fetchProvinces()

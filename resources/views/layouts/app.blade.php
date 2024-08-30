@@ -42,75 +42,51 @@
             background-size: 100%, 100%;
         }
 
-        /* gambar di  product */
         .card-img-top {
             max-height: 150px;
-            /* Menyesuaikan tinggi gambar */
             object-fit: cover;
         }
 
         .card-body {
             font-size: 0.9rem;
-            /* Ukuran teks lebih kecil */
         }
 
-        /* pagination */
         .pagination .page-item .page-link {
             font-size: 1rem;
-            /* Atur ukuran font */
             padding: 0.5rem 0.75rem;
-            /* Sesuaikan padding */
         }
 
         .pagination .page-item.active .page-link {
             background-color: #007bff;
-            /* Warna background untuk halaman aktif */
             border-color: #007bff;
-            /* Warna border untuk halaman aktif */
             color: #fff;
-            /* Warna teks untuk halaman aktif */
         }
 
         .pagination .page-item.disabled .page-link {
             color: #6c757d;
-            /* Warna untuk elemen non-aktif */
         }
 
-        /* untuk produk */
         .product-image {
             width: 100%;
-            /* Mengatur lebar gambar sesuai dengan kontainer */
             height: auto;
-            /* Mempertahankan rasio aspek */
             aspect-ratio: 1 / 1;
-            /* Membuat gambar berbentuk persegi */
             object-fit: cover;
-            /* Memotong gambar agar sesuai dalam kotak persegi */
             border-radius: 10px;
-            /* Melengkungkan sudut gambar */
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            /* Menambahkan bayangan */
         }
 
-        /* untuk gambar dalam produk */
         .product-card {
             height: 100%;
-            /* Pastikan kartu memiliki tinggi 100% */
             display: flex;
             flex-direction: column;
         }
 
         .product-image {
             width: 100%;
-            /* Lebar gambar mengikuti lebar kontainer */
             height: 250px;
-            /* Mengatur tinggi gambar agar seragam */
             object-fit: cover;
-            /* Gambar akan dipotong agar sesuai dengan kotak tanpa distorsi */
             border-radius: 10px;
-            /* Sudut melengkung */
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            /* Bayangan lembut */
         }
 
         .product-body {
@@ -124,7 +100,7 @@
     <div class="container-fluid">
         <nav class="navbar navbar-expand-lg bg navbar-dark bg-dark fixed-top">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">SEPEEDSPORT</a>
+                <a class="navbar-brand" href="#">SPEEDSPORT</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -176,10 +152,31 @@
                             <a class="nav-link" aria-current="page" href="#">Keranjang</a>
                         </li>
                     </ul>
-                    <form class="d-flex position-absolute top-50 end-0 translate-middle-y" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form>
+                    @auth
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">{{ Auth::user()->name }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="btn btn-link nav-link">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    @endauth
+
+                    @guest
+                        <form class="d-flex position-absolute top-50 end-0 translate-middle-y" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">Login</a>
+                            </li>
+                        </ul>
+                    @endguest
                 </div>
             </div>
         </nav>
@@ -238,7 +235,6 @@
                 </div>
             </div>
         </footer>
-        
     </div>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
