@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 
 @section('content')
@@ -57,6 +56,11 @@
                                     </a>
                                 </div>
                             @endif
+
+                            <!-- Link to Register -->
+                            <div class="form-group mt-3">
+                                <p>Belum punya akun? <a href="{{ route('register') }}">Daftar disini</a>.</p>
+                            </div>
                         </form>
                     </div>
                 </div>

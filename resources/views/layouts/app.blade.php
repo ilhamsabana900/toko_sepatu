@@ -100,7 +100,7 @@
     <div class="container-fluid">
         <nav class="navbar navbar-expand-lg bg navbar-dark bg-dark fixed-top">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#">SPEEDSPORT</a>
+                <a class="navbar-brand" href="/">SPEEDSPORT</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -148,9 +148,22 @@
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="#">Riwayat</a>
                         </li>
+                        @auth
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">Keranjang</a>
+                            <a class="nav-link" href="{{ route('keranjang.index') }}">
+                                Keranjang
+                                @if(session('keranjang'))
+                                    @php
+                                        $keranjang = session('keranjang');
+                                        $jumlahItem = array_sum(array_column($keranjang, 'jumlah'));
+                                    @endphp
+                                    <span class="badge badge-primary">{{ $jumlahItem }}</span>
+                                @else
+                                    <span class="badge badge-primary">0</span>
+                                @endif
+                            </a>
                         </li>
+                        @endauth
                     </ul>
                     @auth
                         <ul class="navbar-nav ms-auto">
@@ -167,10 +180,7 @@
                     @endauth
 
                     @guest
-                        <form class="d-flex position-absolute top-50 end-0 translate-middle-y" role="search">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Search</button>
-                        </form>
+                        
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">Login</a>

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 
@@ -40,7 +41,15 @@ Route::middleware('auth')->group(function () {
     Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 });
-
+Route::middleware('auth')->group(function () {
+    // keranjang
+    Route::get('/keranjang', [KeranjangController::class, 'keranjang'])->name('keranjang');
+    // Rute untuk menghapus item dari keranjang
+    Route::delete('/keranjang/{id}', [KeranjangController::class, 'hapus'])->name('keranjang.hapus');
+    // untuk keranjang product
+    Route::post('/keranjang/tambah', [KeranjangController::class, 'tambah'])->name('keranjang.tambah');
+    Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang.index');
+});
 // Rute untuk menampilkan formulir registrasi
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 
@@ -55,3 +64,13 @@ Route::post('/login', [LoginController::class, 'login']);
 
 // Logout
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
+// Rute untuk menampilkan halaman checkout langsung
+Route::get('/checkout/langsung', [KeranjangController::class, 'showCheckout'])->name('checkout.langsung');
+
+// Rute untuk mengarahkan ke halaman checkout langsung dengan data produk
+Route::post('/checkout/langsung', [KeranjangController::class, 'checkoutLangsung'])->name('checkout.langsung');
+
+
+// Rute untuk memproses pembayaran setelah checkout
+Route::post('/checkout/proses', [KeranjangController::class, 'prosesCheckout'])->name('checkout.proses');
