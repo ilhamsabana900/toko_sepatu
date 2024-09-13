@@ -23,9 +23,8 @@ use App\Http\Controllers\Auth\RegisterController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Route untuk halaman admin menggunakan view statis (jika masih diperlukan)
-Route::get('/admin', function () {
-    return view('admin.products.index');
-})->middleware('auth');
+Route::get('/admin', [ProductController::class, 'index'])->name('admin.products.index');
+
 
 // Grup route untuk admin dengan middleware auth
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
