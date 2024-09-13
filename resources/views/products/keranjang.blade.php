@@ -48,9 +48,9 @@
         <h3>Total: Rp. {{ number_format($total, 0, ',', '.') }}</h3>
 
         <!-- Form untuk proses checkout -->
-        <form action="{{ route('checkout.proses') }}" method="POST">
+        <form action="{{ route('checkout') }}" method="POST">
             @csrf
-            <button type="submit" class="btn btn-success">Proses Checkout</button>
+            <button type="submit" class="btn btn-success mt-2">Checkout Sekarang</button>
         </form>
     @endif
 </div>

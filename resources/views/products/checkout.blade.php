@@ -10,10 +10,17 @@
                 <h3>Detail Pesanan</h3>
             </div>
             <div class="card-body">
-                <p><strong>Nama Produk:</strong> {{ session('order')['nama'] }}</p>
-                <p><strong>Ukuran:</strong> {{ session('order')['ukuran'] }}</p>
-                <p><strong>Jumlah:</strong> {{ session('order')['jumlah'] }}</p>
-                <p><strong>Total Harga:</strong> Rp. {{ number_format(session('order')['total'], 0, ',', '.') }}</p>
+                <p><h1>DATA PEMBELI</h1></p>
+                <p><strong>Nama Pembeli:</strong> {{ session('order')['nama_pembeli'] }}</p>
+                <p><strong>Telepon:</strong> {{ session('order')['telepon'] }}</p>
+                <p><h2>DATA PRODUK</h2></p>
+                @foreach(session('order')['items'] as $item)
+                    <p><strong>Nama Produk:</strong> {{ $item['nama'] }}</p>
+                    <p><strong>Ukuran:</strong> {{ $item['ukuran'] }}</p>
+                    <p><strong>Jumlah:</strong> {{ $item['jumlah'] }}</p>
+                    <p><strong>Total Harga:</strong> Rp. {{ number_format($item['harga'] * $item['jumlah'], 0, ',', '.') }}</p>
+                @endforeach
+                <h3>Total: Rp. {{ number_format(session('order')['total'], 0, ',', '.') }}</h3>
             </div>
         </div>
 

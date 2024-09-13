@@ -40,6 +40,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
     Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+    // Rute untuk menampilkan halaman checkout langsung
+    Route::get('/checkout', [KeranjangController::class, 'showCheckout'])->name('checkout.langsung');
+
+    // Rute untuk mengarahkan ke halaman checkout langsung dengan data produk
+    Route::post('/checkout', [KeranjangController::class, 'checkoutLangsung'])->name('checkout.langsung');
+
+    // Route untuk checkout keranjang
+    Route::get('/checkoutKeranjang', [KeranjangController::class, 'checkout'])->name('checkout');
+    Route::post('/checkoutKeranjang', [KeranjangController::class, 'checkout'])->name('checkout');
+
+    // Rute untuk memproses pembayaran setelah checkout
+    Route::post('/checkout/proses', [KeranjangController::class, 'prosesCheckout'])->name('checkout.proses');
 });
 Route::middleware('auth')->group(function () {
     // keranjang
@@ -64,13 +76,3 @@ Route::post('/login', [LoginController::class, 'login']);
 
 // Logout
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
-
-// Rute untuk menampilkan halaman checkout langsung
-Route::get('/checkout/langsung', [KeranjangController::class, 'showCheckout'])->name('checkout.langsung');
-
-// Rute untuk mengarahkan ke halaman checkout langsung dengan data produk
-Route::post('/checkout/langsung', [KeranjangController::class, 'checkoutLangsung'])->name('checkout.langsung');
-
-
-// Rute untuk memproses pembayaran setelah checkout
-Route::post('/checkout/proses', [KeranjangController::class, 'prosesCheckout'])->name('checkout.proses');
