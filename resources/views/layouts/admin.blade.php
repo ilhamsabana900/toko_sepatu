@@ -205,11 +205,29 @@
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a  href="{{ route('admin.products.index') }}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Dashboard
-                                    <i class="right fas fa-angle-left"></i>
+                                    <i class="right fas"></i>
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a  href="{{ route('admin.user.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    User
+                                    <i class="right fas"></i>
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a  href="{{ route('admin.transactions.index') }}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Transaksi
+                                    <i class="right fas"></i>
                                 </p>
                             </a>
                         </li>

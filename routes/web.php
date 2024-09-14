@@ -6,7 +6,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\UserTransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +31,11 @@ Route::get('/admin', [ProductController::class, 'index'])->name('admin.products.
 // Grup route untuk admin dengan middleware auth
 Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::resource('products', ProductController::class);
+    Route::resource('user', UserController::class);
+    Route::resource('transactions', TransactionController::class);
+    Route::patch('transactions/{transaction}/status', [TransactionController::class, 'updateStatus'])->name('transactions.updateStatus');
+    
+
 });
 
 // Route yang tidak termasuk dalam grup tetapi membutuhkan auth, tetap bisa diberi middleware
@@ -51,6 +58,7 @@ Route::middleware('auth')->group(function () {
 
     // Rute untuk memproses pembayaran setelah checkout
     Route::post('/checkout/proses', [KeranjangController::class, 'prosesCheckout'])->name('checkout.proses');
+    Route::get('/riwayat', [UserTransactionController::class, 'index'])->name('user.transactions.index');
 });
 Route::middleware('auth')->group(function () {
     // keranjang

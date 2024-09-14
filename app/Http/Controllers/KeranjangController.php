@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class KeranjangController extends Controller
@@ -146,7 +149,7 @@ class KeranjangController extends Controller
 
     public function prosesCheckout(Request $request)
     {
-        // Periksa apakah ada data pesanan di sesi 'order'
+        // Ambil data pesanan dari sesi
         $order = session()->get('order');
 
         // Jika tidak ada data pesanan di sesi 'order', ambil data keranjang
@@ -162,7 +165,7 @@ class KeranjangController extends Controller
             // Dapatkan data user yang sedang login
             $user = Auth::user();
 
-            // Siapkan data pesanan
+            // Siapkan data pesanan berdasarkan data keranjang
             $order = [
                 'items' => $keranjang,
                 'total' => array_sum(array_map(function ($item) {
@@ -176,10 +179,17 @@ class KeranjangController extends Controller
             session()->put('order', $order);
         }
 
+        // Simpan transaksi ke database (harus dilakukan setelah order di-set)
+        $transaction = Transaction::create([
+            'user_id' => Auth::id(),
+            'total_harga' => $order['total'],
+            'status' => 'pending', // Status awal 'pending'
+        ]);
+
         // Nomor WhatsApp tujuan
         $nomorWhatsApp = '6285772589574'; // ganti dengan nomor tujuan
 
-        // Format pesan
+        // Format pesan WhatsApp
         $pesan = "Halo, saya ingin melakukan pembayaran untuk pesanan berikut:\n\n" .
             "Nama Pembeli: " . $order['nama_pembeli'] . "\n" .
             "Nomor Telepon: " . $order['telepon'] . "\n\n";
@@ -193,20 +203,21 @@ class KeranjangController extends Controller
                 "Total Harga: Rp " . number_format($item['harga'] * $item['jumlah'], 0, ',', '.') . "\n\n";
         }
 
-        $pesan .= "Total Harga Keseluruhan: Rp " . number_format($order['total'], 0, ',', '.') . "\n\n" .
-            "Terima kasih!";
+        $pesan .= "Total Harga Keseluruhan: Rp " . number_format($order['total'], 0, ',', '.') . "\n\n" . "Terima kasih!";
 
-        // Encode pesan
+        // Encode pesan untuk URL WhatsApp
         $pesanEncoded = urlencode($pesan);
 
         // URL WhatsApp
         $url = "https://wa.me/$nomorWhatsApp?text=$pesanEncoded";
 
+        // Bersihkan session keranjang dan order setelah proses checkout selesai
+        session()->forget('keranjang');
+        session()->forget('order');
+
         // Redirect ke WhatsApp
         return redirect()->away($url);
     }
-
-
 
 
     public function hapus($id)

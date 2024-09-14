@@ -146,7 +146,7 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">Riwayat</a>
+                            <a class="nav-link" aria-current="page" href="{{ route('user.transactions.index') }}">Riwayat</a>
                         </li>
                         @auth
                         <li class="nav-item">
