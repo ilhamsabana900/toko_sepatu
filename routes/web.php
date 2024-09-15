@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\Auth\LoginController;
@@ -23,9 +24,8 @@ use App\Http\Controllers\UserTransactionController;
 
 // Halaman Beranda
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 
-// Route untuk halaman admin menggunakan view statis (jika masih diperlukan)
-Route::get('/admin', [ProductController::class, 'index'])->name('admin.products.index');
 
 
 // Grup route untuk admin dengan middleware auth
@@ -34,15 +34,12 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::resource('user', UserController::class);
     Route::resource('transactions', TransactionController::class);
     Route::patch('transactions/{transaction}/status', [TransactionController::class, 'updateStatus'])->name('transactions.updateStatus');
-    
-
 });
 
 // Route yang tidak termasuk dalam grup tetapi membutuhkan auth, tetap bisa diberi middleware
 Route::middleware('auth')->group(function () {
     Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
     Route::post('/products', [ProductController::class, 'store'])->name('products.store');
-    Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
     Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
     Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
@@ -59,6 +56,8 @@ Route::middleware('auth')->group(function () {
     // Rute untuk memproses pembayaran setelah checkout
     Route::post('/checkout/proses', [KeranjangController::class, 'prosesCheckout'])->name('checkout.proses');
     Route::get('/riwayat', [UserTransactionController::class, 'index'])->name('user.transactions.index');
+    // Route untuk halaman admin menggunakan view statis (jika masih diperlukan)
+    Route::get('/admin', [ProductController::class, 'index'])->name('admin.products.index');
 });
 Route::middleware('auth')->group(function () {
     // keranjang
@@ -83,3 +82,8 @@ Route::post('/login', [LoginController::class, 'login']);
 
 // Logout
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+// Rute khusus untuk admin dengan middleware 'admin'
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    // Rute admin lainnya
+});

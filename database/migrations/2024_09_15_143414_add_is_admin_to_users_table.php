@@ -13,21 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('transactions', function (Blueprint $table) {
-
+        Schema::table('users', function (Blueprint $table) {
+            $table->boolean('is_admin')->default(false); // Default false untuk pengguna biasa
         });
     }
-    
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
-        Schema::table('transactions', function (Blueprint $table) {
-            //
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('is_admin');
         });
     }
 };
