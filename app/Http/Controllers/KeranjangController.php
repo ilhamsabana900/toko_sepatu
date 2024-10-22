@@ -157,10 +157,7 @@ class KeranjangController extends Controller
             // Ambil data keranjang dari session
             $keranjang = session()->get('keranjang', []);
 
-            // Pastikan data keranjang ada
-            if (empty($keranjang)) {
-                return redirect('/keranjang')->with('error', 'Keranjang Anda kosong.');
-            }
+            
 
             // Dapatkan data user yang sedang login
             $user = Auth::user();
@@ -183,40 +180,33 @@ class KeranjangController extends Controller
         $transaction = Transaction::create([
             'user_id' => Auth::id(),
             'total_harga' => $order['total'],
-            'status' => 'pending', // Status awal 'pending'
+            'status' => 'pending', 
         ]);
+        // Set your Merchant Server Key
+        \Midtrans\Config::$serverKey = config('midtrans.serverKey');
+        // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).
+        \Midtrans\Config::$isProduction = false;
+        // Set sanitization on (default)
+        \Midtrans\Config::$isSanitized = true;
+        // Set 3DS transaction for credit card to true
+        \Midtrans\Config::$is3ds = true;
 
-        // Nomor WhatsApp tujuan
-        $nomorWhatsApp = '6285772589574'; // ganti dengan nomor tujuan
+        $params = array(
+            'transaction_details' => array(
+                'order_id' => rand(),
+                'gross_amount' => $order['total'],
+            )
+        );
 
-        // Format pesan WhatsApp
-        $pesan = "Halo, saya ingin melakukan pembayaran untuk pesanan berikut:\n\n" .
-            "Nama Pembeli: " . $order['nama_pembeli'] . "\n" .
-            "Nomor Telepon: " . $order['telepon'] . "\n\n";
+        $snapToken = \Midtrans\Snap::getSnapToken($params);
 
-        // Tambahkan detail produk ke pesan
-        foreach ($order['items'] as $item) {
-            $pesan .= "Nama Produk: " . $item['nama'] . "\n" .
-                "Ukuran: " . $item['ukuran'] . "\n" .
-                "Jumlah: " . $item['jumlah'] . "\n" .
-                "Harga per Item: Rp " . number_format($item['harga'], 0, ',', '.') . "\n" .
-                "Total Harga: Rp " . number_format($item['harga'] * $item['jumlah'], 0, ',', '.') . "\n\n";
-        }
+        $transaction->snap_token=$snapToken;
+        $transaction->save();
 
-        $pesan .= "Total Harga Keseluruhan: Rp " . number_format($order['total'], 0, ',', '.') . "\n\n" . "Terima kasih!";
 
-        // Encode pesan untuk URL WhatsApp
-        $pesanEncoded = urlencode($pesan);
+        // Redirect ke halaman url
+        return view('products.pembayaran', compact('transaction', 'order'));
 
-        // URL WhatsApp
-        $url = "https://wa.me/$nomorWhatsApp?text=$pesanEncoded";
-
-        // Bersihkan session keranjang dan order setelah proses checkout selesai
-        session()->forget('keranjang');
-        session()->forget('order');
-
-        // Redirect ke WhatsApp
-        return redirect()->away($url);
     }
 
 

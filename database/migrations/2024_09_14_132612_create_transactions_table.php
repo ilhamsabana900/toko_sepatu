@@ -19,6 +19,7 @@ return new class extends Migration
         $table->decimal('total_harga', 10, 2);
         $table->string('status')->default('pending'); // Contoh status: pending, selesai, batal
         $table->timestamp('tanggal_transaksi')->useCurrent();
+        $table->string('snap_token')->nullable();
         $table->timestamps();
 
         // Relasi dengan tabel user

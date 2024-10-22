@@ -29,7 +29,12 @@
             <button type="submit" class="btn btn-success">Proses Pembayaran</button>
         </form>
     @else
-        <p>Data pesanan tidak ditemukan.</p>
+    <form action="{{ route('checkout.proses') }}" method="POST" class="mt-3">
+      @csrf
+      <button type="submit" class="btn btn-success" id="pay-button">Proses Pembayaran</button>
+  </form>
     @endif
 </div>
 @endsection
+
+

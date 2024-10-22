@@ -14,6 +14,7 @@ class Transaction extends Model
         'total_harga',
         'status',
         'tanggal_transaksi',
+        'snap_token',
         
     ];
 

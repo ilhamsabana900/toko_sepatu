@@ -17,6 +17,12 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('telepon')->nullable();
+            $table->string('provinsi_id')->nullable();
+            $table->string('kota_id')->nullable();
+            $table->string('kecamatan_id')->nullable();
+            $table->string('kelurahan_id')->nullable();
+            $table->String('kode_pos')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

@@ -48,6 +48,7 @@ Route::middleware('auth')->group(function () {
 
     // Rute untuk mengarahkan ke halaman checkout langsung dengan data produk
     Route::post('/checkout', [KeranjangController::class, 'checkoutLangsung'])->name('checkout.langsung');
+    Route::get('/pembayaran', [KeranjangController::class,'prosesCheckout'])->name('pembayaran');
 
     // Route untuk checkout keranjang
     Route::get('/checkoutKeranjang', [KeranjangController::class, 'checkout'])->name('checkout');
