@@ -39,6 +39,7 @@
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Hapus</button>
                             </form>
+                            
                         </td>
                     </tr>
                 @endforeach

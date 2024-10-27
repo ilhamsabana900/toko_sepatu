@@ -16,6 +16,7 @@ return new class extends Migration
     Schema::create('transactions', function (Blueprint $table) {
         $table->id();
         $table->unsignedBigInteger('user_id');
+        $table->unsignedBigInteger('product_id');
         $table->decimal('total_harga', 10, 2);
         $table->string('status')->default('pending'); // Contoh status: pending, selesai, batal
         $table->timestamp('tanggal_transaksi')->useCurrent();
@@ -24,6 +25,9 @@ return new class extends Migration
 
         // Relasi dengan tabel user
         $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+        // Relasi dengan table product
+        $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
     });
 }
 

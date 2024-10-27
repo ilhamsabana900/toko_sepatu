@@ -5,8 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SPEEDSPORT</title>
-    <link href="" rel="stylesheet">
-    <link rel="stylesheet" href="C:\Users\ilhams\Documents\Project\toko_sepatu\resources\js\app.js">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
@@ -15,6 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
         integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous">
     </script>
+
     <style>
         body {
             padding-top: 70px;
@@ -81,14 +80,6 @@
             flex-direction: column;
         }
 
-        .product-image {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
         .product-body {
             flex-grow: 1;
         }
@@ -98,7 +89,7 @@
 
 <body>
     <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg bg navbar-dark bg-dark fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top py-3">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">SPEEDSPORT</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -107,7 +98,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto position-absolute top-50 start-50 translate-middle">
+                    <ul class="navbar-nav me-auto">
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="#">New</a>
                         </li>
@@ -180,7 +171,6 @@
                     @endauth
 
                     @guest
-                        
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">Login</a>
@@ -194,7 +184,6 @@
         <footer class="bg-dark text-light p-4 mt-5">
             <div class="container">
                 <div class="row">
-                    <!-- Informasi Kontak -->
                     <div class="col-md-3">
                         <h5>Contact Us</h5>
                         <p><i class="fas fa-map-marker-alt"></i> Pasuruan, Jawa Timur</p>
@@ -202,7 +191,6 @@
                         <p><i class="fas fa-envelope"></i> speedsport@gmail.com</p>
                     </div>
         
-                    <!-- Navigasi Tambahan -->
                     <div class="col-md-3">
                         <h5>Quick Links</h5>
                         <ul class="list-unstyled">
@@ -214,7 +202,6 @@
                         </ul>
                     </div>
         
-                    <!-- Media Sosial -->
                     <div class="col-md-3">
                         <h5>Follow Us</h5>
                         <div>
@@ -230,7 +217,6 @@
                         </form>
                     </div>
         
-                    <!-- Hak Cipta -->
                     <div class="col-md-3">
                         <h5>Perusahaan Kami</h5>
                         <p>Kunjungi alamat toko kami dan hubungi untuk informasi lebih lanjut</p>
